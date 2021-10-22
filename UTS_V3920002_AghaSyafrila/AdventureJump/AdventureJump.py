@@ -9,7 +9,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
  
-# ukuran layar window
+# mengatur ukuran layar window
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         # Call the parent's constructor
         super(Player,self).__init__()
  
-        # membuat player
+        # membuat player dengan import gambar
         width = 40
         height = 60
         self.image = pygame.image.load('./asset/mc4.png')
@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         # bergerak left/right
         self.rect.x += self.change_x
  
-        # See if we hit anything
+        # Lihat apakah menabrak sesuatu
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
             # jika bergerak kearah kanan maka atur sisi kanan ke sisi kiri
@@ -59,17 +59,17 @@ class Player(pygame.sprite.Sprite):
         # Move up/down
         self.rect.y += self.change_y
  
-        # Check and see if we hit anything
+        # Periksa dan lihat apakah kita menabrak sesuatu
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
  
-            # Reset our position based on the top/bottom of the object.
+            # Atur ulang posisi kita berdasarkan atas/bawah objek.
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
  
-            # Stop our vertical movement
+            # Hentikan gerakan vertikal
             self.change_y = 0
  
             if isinstance(block, MovingPlatform):
@@ -82,16 +82,16 @@ class Player(pygame.sprite.Sprite):
         else:
             self.change_y += .40
  
-        # See if we are on the ground.
+        # Pijakan
         if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
             self.change_y = 0
             self.rect.y = SCREEN_HEIGHT - self.rect.height
  
     def jump(self):
  
-        # move down a bit and see if there is a platform below us.
-        # Move down 2 pixels because it doesn't work well if we only move down
-        # 1 when working with a platform moving down.
+        # turun sedikit dan lihat apakah ada platform di bawah kita.
+        # Pindah ke bawah 2 piksel karena tidak berfungsi dengan baik jika kita hanya bergerak ke bawah
+        # 1 saat bekerja dengan platform yang bergerak ke bawah.
         self.rect.y += 2
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         self.rect.y -= 2
@@ -100,7 +100,7 @@ class Player(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
  
-    # Player-controlled movement:
+    # Gerakan yang dikendalikan pemain:
     def go_left(self):
         """ Called when the user hits the left arrow. """
         self.change_x = -10
@@ -144,12 +144,12 @@ class MovingPlatform(Platform):
     level = None
  
     def update(self):
-        """ Move the platform.
-            If the player is in the way, it will shove the player
-            out of the way. This does NOT handle what happens if a
-            platform shoves a player into another object. Make sure
-            moving platforms have clearance to push the player around
-            or add code to handle what happens if they don't. """
+        """ Pindahkan platformnya.
+            Jika pemain menghalangi, itu akan mendorong pemain
+            keluar dari jalan. Ini TIDAK menangani apa yang terjadi jika a
+            platform mendorong pemain ke objek lain. Yakinkan
+            platform bergerak memiliki izin untuk mendorong pemain berkeliling
+            atau tambahkan kode untuk menangani apa yang terjadi jika tidak. """
  
         # Move left/right
         self.rect.x += self.change_x
@@ -157,34 +157,33 @@ class MovingPlatform(Platform):
         # See if we hit the player
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
-            # We did hit the player. Shove the player around and
-            # assume he/she won't hit anything else.
+            # Kami memang memukul pemain. Dorong pemain sekitar dan
+            # menganggap dia tidak akan memukul apa pun.
  
-            # If we are moving right, set our right side
-            # to the left side of the item we hit
+            # Jika kita bergerak ke kanan, atur sisi kanan kita
+            # ke sisi kiri item yang kita tekan
             if self.change_x < 0:
                 self.player.rect.right = self.rect.left
             else:
-                # Otherwise if we are moving left, do the opposite.
+                # Sebaliknya jika kita bergerak ke kiri, lakukan sebaliknya.
                 self.player.rect.left = self.rect.right
  
         # Move up/down
         self.rect.y += self.change_y
  
-        # Check and see if we the player
+        # Periksa dan lihat apakah kami pemainnya
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
-            # We did hit the player. Shove the player around and
-            # assume he/she won't hit anything else.
+            # Kami memang memukul pemain. Dorong pemain sekitar dan
+            # menganggap dia tidak akan memukul apa pun.
  
-            # Reset our position based on the top/bottom of the object.
+            # Atur ulang posisi kita berdasarkan atas/bawah objek.
             if self.change_y < 0:
                 self.player.rect.bottom = self.rect.top
             else:
                 self.player.rect.top = self.rect.bottom
  
-        # Check the boundaries and see if we need to reverse
-        # direction.
+        # Periksa batasnya dan lihat apakah kita perlu mundur arah.
         if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
             self.change_y *= -1
  
