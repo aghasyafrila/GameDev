@@ -1,10 +1,11 @@
-from math import pi, sin, cos #untuk menghitung pergerakan kamera
+ #untuk menghitung pergerakan kamera, gambar, aktor/karakter dan durasi
+from math import pi, sin, cos
 
-from direct.showbase.ShowBase import ShowBase #untuk mengambil dan menampilkan gambar
-from direct.task import Task #untuk manajemen fungsi
-from direct.actor.Actor import Actor #meload kelas aktor 
-from direct.interval.IntervalGlobal import Sequence #durasi movement 
-from panda3d.core import Point3 #untuk mengatur koordinat 
+from direct.showbase.ShowBase import ShowBase 
+from direct.task import Task 
+from direct.actor.Actor import Actor 
+from direct.interval.IntervalGlobal import Sequence
+from panda3d.core import Point3 
 
 
 class MyApp(ShowBase):
