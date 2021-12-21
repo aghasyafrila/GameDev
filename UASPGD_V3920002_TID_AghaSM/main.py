@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-# Author: Shao Zhang, Phil Saltzman, and Elan Ruskin
-# Last Updated: 2015-03-13
-#
-# This tutorial shows how to load, play, and manipulate sounds
-# and sound intervals in a panda project.
-
+# Mengimport tiap fungsi yang digunakan
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import NodePath, TextNode
 from panda3d.core import PointLight, AmbientLight
@@ -18,8 +13,7 @@ from direct.interval.MetaInterval import Parallel
 from direct.interval.LerpInterval import LerpHprInterval
 import sys
 
-# Buat instance ShowBase, yang akan membuka jendela dan mengatur
-# grafik pemandangan dan kamera.
+# Buat instance ShowBase, yang akan membuka jendela dan mengatur grafik arah pandang dan kamera
 base = ShowBase()
 
 class MusicBox(DirectObject):
@@ -35,13 +29,12 @@ class MusicBox(DirectObject):
                                        fg=(1, 1, 1, 1), pos=(0.06, -0.1),
                                        align=TextNode.ALeft, scale=.05)
 
-        # Set up the key input
+        # Set up the key input yang mengatur esc untuk keluar program
         self.accept('escape', sys.exit)
 
-        # Fix the camera position
         base.disableMouse()
 
-        # Memuat suara dilakukan dengan cara yang mirip dengan memuat hal-hal lain
+   
         # Memuat lagu kotak musik utama
         self.musicBoxSound = loader.loadMusic('music/musicbox.ogg')
         self.musicBoxSound.setVolume(.5)  # Mengatur Volume
